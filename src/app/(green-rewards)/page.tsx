@@ -61,6 +61,9 @@ export default function Home() {
               <p className="text-sm font-medium"></p>
             </CardBody>
             <CardFooter className="flex justify-between">
+              <Button color="warning" className="rounded-md font-bold">
+                Iniciar missão!
+              </Button>
               <Tooltip showArrow content="Recompensa">
                 <div className="flex items-center gap-2 rounded-md bg-warning p-1">
                   <CoinsIcon className="text-foreground-50" />
@@ -69,9 +72,6 @@ export default function Home() {
                   </p>
                 </div>
               </Tooltip>
-              <Button color="warning" className="rounded-md font-bold">
-                Iniciar missão!
-              </Button>
             </CardFooter>
           </Card>
         </div>

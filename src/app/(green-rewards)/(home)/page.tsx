@@ -1,5 +1,5 @@
 import { MissionCard } from '@/components/mission-card'
-import { RedirectionForm } from '../components/redirection-form'
+import { RedirectionForm } from '../../../components/redirection-form'
 
 export default function Home() {
   return (

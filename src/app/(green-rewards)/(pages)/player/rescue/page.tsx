@@ -1,4 +1,4 @@
-import { RescueCard } from '@/app/(green-rewards)/components/cards/rescue-card'
+import { RescueCard } from '@/components/cards/rescue-card'
 import { Wallet } from 'lucide-react'
 
 export default function page() {

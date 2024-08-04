@@ -1,5 +1,5 @@
 'use client'
-import { NavbarComponent } from '../components/navbar'
+import { NavbarComponent } from '../../../components/navbar'
 
 export default function Template({ children }: { children: React.ReactNode }) {
   return (

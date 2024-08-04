@@ -4,7 +4,7 @@ import { BadgeCheckIcon, Coins } from 'lucide-react'
 export function RescueCard() {
   return (
     <main className="flex flex-col gap-4">
-      <section className="flex h-auto w-full flex-col space-y-6 rounded-md bg-gray-200 p-4">
+      <section className="flex h-auto w-full flex-col space-y-6 rounded-md bg-content3 p-4">
         <header className="flex justify-end">
           <span className="flex items-center space-x-1 text-xl text-green-400">
             +<strong>20</strong>
@@ -19,7 +19,7 @@ export function RescueCard() {
         </p>
       </section>
 
-      <article className="flex items-center justify-center space-x-2 rounded-md bg-gray-200 p-2">
+      <article className="flex items-center justify-center space-x-2 rounded-md bg-content3 p-2">
         <strong className="font-bold">Americanas</strong>
         <BadgeCheckIcon className="fill-primary text-white" />
       </article>

@@ -1,5 +1,5 @@
-"use client";
-import { useAuthStore } from "@/store/auth";
+'use client'
+import { useAuthStore } from '@/store/auth'
 import {
   Navbar,
   NavbarBrand,
@@ -8,24 +8,20 @@ import {
   Avatar,
   Link,
   Button,
-  Popover,
-  PopoverTrigger,
-  PopoverContent,
   Dropdown,
   DropdownTrigger,
   DropdownMenu,
   DropdownItem,
-} from "@nextui-org/react";
-import { LogOutIcon, MoonIcon, MoreVerticalIcon, SunIcon } from "lucide-react";
-import { useTheme } from "next-themes";
-import { usePathname, useRouter } from "next/navigation";
+} from '@nextui-org/react'
+import { LogOutIcon, MoonIcon, MoreVerticalIcon, SunIcon } from 'lucide-react'
+import { useTheme } from 'next-themes'
+import { usePathname, useRouter } from 'next/navigation'
+import { useEffect, useState } from 'react'
 
-type NavLinksProps = {
-  [x: string]: Array<{ label: string; href: string }>;
-};
+type NavLinksProps = { label: string; href: string }
 
 export function NavbarComponent() {
-  const pathName = usePathname();
+  const pathName = usePathname()
 
   const { corporation, user, logout } = useAuthStore(
     ({ user, corporation, logout }) => ({
@@ -33,54 +29,57 @@ export function NavbarComponent() {
       corporation,
       logout,
     }),
-  );
-  const router = useRouter();
+  )
+  const router = useRouter()
 
   function handleLogout() {
-    logout();
-    router.push("/");
+    logout()
+    router.push('/')
   }
 
-  const currentPath = pathName.split("/")[1] ?? "player";
+  // const currentPath = pathName.split('/')[1] ?? 'player'
 
-  const navLinks: NavLinksProps = {
-    player: [
-      {
-        label: "Missões",
-        href: "/player/missions",
-      },
-      {
-        label: "Resgatar Prêmios",
-        href: "/player/rescue",
-      },
-    ],
-    supporter: [
-      {
-        label: "Missões",
-        href: "/supporter/missions",
-      },
-      {
-        label: "Resgatar Prêmios",
-        href: "/supporter/rescue",
-      },
-    ],
-    institution: [
-      {
-        label: "Instituições",
-        href: "/institution",
-      },
-      {
-        label: "Resgatar Prêmios",
-        href: "/institution/rescue",
-      },
-    ],
-  };
+  // const navLinks: NavLinksProps = []
+
+  const [navLinks, setNavLinks] = useState<NavLinksProps[]>([])
 
   const hasActiveLink = (path: string) => {
-    return pathName === path;
-  };
+    return pathName === path
+  }
 
-  const { theme, setTheme } = useTheme();
+  const { theme, setTheme } = useTheme()
+
+  useEffect(() => {
+    if (user) {
+      if (user.type === 'PLAYER') {
+        setNavLinks([
+          { href: '/missions', label: 'Missões' },
+          { href: '/missions/active', label: 'Missões Ativas' },
+          { href: '/player/rascue', label: 'Prêmios' },
+        ])
+      } else {
+        setNavLinks([
+          { href: '/missions', label: 'Missões' },
+          { href: '/Aprovações', label: 'Aprovar requisições' },
+        ])
+      }
+    }
+
+    if (corporation) {
+      if (corporation.type === 'SPONSOR') {
+        setNavLinks([
+          { href: '/missions', label: 'Missões' },
+          { href: '/sponsor/rascue', label: 'Meus Prêmios' },
+          { href: '/sponsor/institution', label: 'Ajudar Instituições' },
+        ])
+      } else {
+        setNavLinks([
+          { href: '/missions', label: 'Missões' },
+          { href: '/institution/mission', label: 'Minhas missões' },
+        ])
+      }
+    }
+  }, [corporation, user])
 
   return (
     <Navbar maxWidth="2xl">
@@ -89,10 +88,10 @@ export function NavbarComponent() {
         <p className="font-bold text-inherit">Green Rewards</p>
       </NavbarBrand>
       <NavbarContent className="hidden gap-4 sm:flex" justify="center">
-        {navLinks[currentPath].map((navItem) => (
+        {navLinks.map((navItem) => (
           <NavbarItem key={navItem.href} isActive={hasActiveLink(navItem.href)}>
             <Link
-              color={hasActiveLink(navItem.href) ? "success" : "foreground"}
+              color={hasActiveLink(navItem.href) ? 'success' : 'foreground'}
               href={navItem.href}
             >
               {navItem.label}
@@ -111,17 +110,17 @@ export function NavbarComponent() {
             <DropdownMenu>
               <DropdownItem
                 startContent={
-                  theme === "light" ? (
+                  theme === 'light' ? (
                     <SunIcon size={16} />
                   ) : (
                     <MoonIcon size={16} />
                   )
                 }
                 onPress={() => {
-                  setTheme(theme === "light" ? "dark" : "light");
+                  setTheme(theme === 'light' ? 'dark' : 'light')
                 }}
               >
-                Tema {theme === "light" ? "Claro" : "Escuro"}
+                Tema {theme === 'light' ? 'Claro' : 'Escuro'}
               </DropdownItem>
               <DropdownItem
                 onPress={handleLogout}
@@ -140,11 +139,11 @@ export function NavbarComponent() {
               name={user?.username}
               isBordered
               size="md"
-              color={hasActiveLink("/player/edit") ? "success" : "default"}
+              color={hasActiveLink('/player/edit') ? 'success' : 'default'}
             />
           </Link>
         </NavbarItem>
       </NavbarContent>
     </Navbar>
-  );
+  )
 }

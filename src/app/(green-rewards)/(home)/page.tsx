@@ -8,9 +8,9 @@ import {
   Textarea,
   Tooltip,
 } from '@nextui-org/react'
-import { RedirectionForm } from './components/redirection-form'
+import { RedirectionForm } from '../components/redirection-form'
 import { BadgeCheckIcon, CoinsIcon } from 'lucide-react'
-import Loading from './loading'
+
 export default function Home() {
   return (
     <div className="flex h-full min-h-screen w-full items-center justify-center">

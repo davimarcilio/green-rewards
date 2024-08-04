@@ -1,4 +1,4 @@
-import { MissionsCard } from '@/app/(green-rewards)/components/missions-card'
+import { MissionsCard } from '@/app/(green-rewards)/components/cards/missions-card'
 
 export default function page() {
   return (

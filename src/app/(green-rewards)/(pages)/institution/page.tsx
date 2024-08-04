@@ -1,4 +1,4 @@
-import { InstitutionCard } from '../../components/institution-card'
+import { InstitutionCard } from '../../components/cards/institution-card'
 
 export default function page() {
   return (

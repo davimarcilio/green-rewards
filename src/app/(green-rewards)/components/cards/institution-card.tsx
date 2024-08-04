@@ -3,9 +3,9 @@ import { BadgeCheckIcon, Wallet } from 'lucide-react'
 
 export function InstitutionCard() {
   return (
-    <main className="flex h-auto w-full flex-col space-y-6 rounded-md bg-gray-200 p-4">
+    <main className="flex h-auto w-full flex-col space-y-6 rounded-md bg-content3 p-4">
       <header className="flex items-center justify-between">
-        <article className="flex items-center justify-center space-x-2 rounded-md bg-gray-200 p-2">
+        <article className="flex items-center justify-center space-x-2 rounded-md bg-content3 p-2">
           <strong className="text-lg font-bold">Americanas</strong>
           <BadgeCheckIcon className="fill-primary text-white" />
         </article>

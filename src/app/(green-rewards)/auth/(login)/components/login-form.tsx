@@ -50,6 +50,7 @@ export function LoginForm({ isCorporation }: LoginFormProps) {
             password,
           },
         )
+
         setStore({
           token: data.token,
           refreshToken: data.refresh,
@@ -57,7 +58,7 @@ export function LoginForm({ isCorporation }: LoginFormProps) {
         })
         localStorage.setItem('@green-reward:1.0.0/token', data.token)
         localStorage.setItem('@green-reward:1.0.0/refreshToken', data.refresh)
-        router.push('/corporation/missions')
+        router.push('/missions')
       } else {
         const { data } = await api.post<UserAuthResponse>(`/auth/login`, {
           login,

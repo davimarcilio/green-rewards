@@ -9,8 +9,6 @@ interface LoginPageProps {
 export default function LoginPage({
   searchParams: { corporation },
 }: LoginPageProps) {
-  console.log(corporation)
-
   return (
     <div className="flex flex-col gap-5">
       <LoginForm isCorporation={corporation ? corporation === 'true' : false} />

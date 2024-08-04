@@ -17,7 +17,7 @@ export function Providers({ children }: PropsWithChildren) {
   useEffect(() => {
     reloadToken()
     const currentPath = pathName.split('/')[1]
-    if (!currentPath) {
+    if (!currentPath || currentPath.includes('auth')) {
       router.push('/missions')
     }
   }, [])

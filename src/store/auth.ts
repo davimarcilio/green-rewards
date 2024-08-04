@@ -1,5 +1,10 @@
 import { api } from '@/lib/api'
-import { ICorporation, IUser, UserAuthResponse } from '@/models/auth'
+import {
+  CorporationAuthResponse,
+  ICorporation,
+  IUser,
+  UserAuthResponse,
+} from '@/models/auth'
 import { create } from 'zustand'
 
 export interface AuthStoreState {
@@ -34,14 +39,28 @@ export const useAuthStore = create<AuthStoreProps>((set, get) => ({
     )
 
     if (refreshToken) {
-      const { data } = await api.post<UserAuthResponse>('/auth/refresh', {
+      const { data } = await api.post<
+        UserAuthResponse | CorporationAuthResponse
+      >('/auth/refresh', {
         token: refreshToken,
       })
-      setStore({
-        token: data.token,
-        refreshToken: data.refresh,
-        user: data.entity,
-      })
+      if (data.entity.type === 'PLAYER' || data.entity.type === 'ADMIN') {
+        setStore({
+          token: data.token,
+          refreshToken: data.refresh,
+          user: data.entity,
+        })
+      }
+      if (
+        data.entity.type === 'INSTITUTION' ||
+        data.entity.type === 'SPONSOR'
+      ) {
+        setStore({
+          token: data.token,
+          refreshToken: data.refresh,
+          corporation: data.entity,
+        })
+      }
     }
   },
   logout: () => {

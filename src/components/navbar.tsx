@@ -55,12 +55,12 @@ export function NavbarComponent() {
         setNavLinks([
           { href: '/missions', label: 'Missões' },
           { href: '/missions/active', label: 'Missões Ativas' },
-          { href: '/player/rascue', label: 'Prêmios' },
+          { href: '/player/rescue', label: 'Prêmios' },
         ])
       } else {
         setNavLinks([
           { href: '/missions', label: 'Missões' },
-          { href: '/Aprovações', label: 'Aprovar requisições' },
+          { href: '/admin', label: 'Aprovar requisições' },
         ])
       }
     }

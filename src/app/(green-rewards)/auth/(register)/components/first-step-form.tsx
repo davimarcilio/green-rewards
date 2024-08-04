@@ -4,7 +4,7 @@ import { ArrowRightIcon } from 'lucide-react'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { MultiStep } from '../../../components/multi-step'
+import { MultiStep } from '../../components/multi-step'
 import { useLocalStorage } from '@uidotdev/usehooks'
 const firstFormSchema = z.object({
   username: z
@@ -19,7 +19,11 @@ const firstFormSchema = z.object({
 
 type FirstFormData = z.infer<typeof firstFormSchema>
 
-export function FirstStepForm() {
+interface FirstStepFormProps {
+  stepsLength: number
+}
+
+export function FirstStepForm({ stepsLength }: FirstStepFormProps) {
   const [, setLocalStorage] = useLocalStorage<FirstFormData>(
     '@green-reward:1.0.0/first-step-form',
   )
@@ -35,7 +39,7 @@ export function FirstStepForm() {
   function onSubmit({ email, username }: FirstFormData) {
     setLocalStorage({ email, username })
   }
-  //   const [showPassword, setShowPassword] = useState(false)
+  //   const [showPassword, setShowPassword] = useState(true)
 
   //   function changeShowPassword() {
   //     setShowPassword((state) => !state)
@@ -44,7 +48,7 @@ export function FirstStepForm() {
   return (
     <>
       <div className="px-10">
-        <MultiStep currentStep={1} size={2} />
+        <MultiStep currentStep={1} size={stepsLength} />
       </div>
       <form
         onSubmit={handleSubmit(onSubmit)}

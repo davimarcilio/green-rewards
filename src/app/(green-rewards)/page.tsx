@@ -10,18 +10,21 @@ import {
 } from '@nextui-org/react'
 import { RedirectionForm } from './components/redirection-form'
 import { BadgeCheckIcon, CoinsIcon } from 'lucide-react'
+import Loading from './loading'
 export default function Home() {
   return (
     <div className="flex h-full min-h-screen w-full items-center justify-center">
       <div className="flex max-h-96 w-full max-w-screen-lg gap-8">
         <div className="flex w-1/2 flex-col justify-between rounded-large bg-content3 p-5 shadow-2xl">
           <div className="flex flex-col">
-            <h1 className="max-w-64 text-2xl font-bold">Ganhe recompensas!</h1>
-            <h1 className="text-2xl font-bold">ajude o meio ambiente!</h1>
+            <h1 className="max-w-64 text-2xl font-bold">
+              Jogue, Ajude e Ganhe Recompensas!
+            </h1>
           </div>
           <p className="text-base font-semibold text-foreground-700">
-            Entre como player, instituição ou como apoiador ajude e seja
-            recompensado por boas ações
+            Participe e contribua para um mundo melhor. Complete missões, reduza
+            a poluição e apoie boas causas para ser recompensado por suas ações.
+            Junte-se a nós e transforme suas boas ações em conquistas valiosas!
           </p>
 
           <RedirectionForm />
@@ -56,7 +59,7 @@ export default function Home() {
                 classNames={{
                   input: 'font-medium text-sm text-foreground-600',
                 }}
-                value={`Nosso objetivo principal é promover um mundo melhor em todos os aspectos. Com ações focadas em ajudar pessoas necessitadas, incentivar a reciclagem e melhorar a ecologia, buscamos transformar nosso planeta em um lugar mais sustentável e solidário. Junte-se a nós nessa missão e faça parte da mudança positiva que queremos ver no mundo.`}
+                defaultValue={`Nosso objetivo principal é promover um mundo melhor em todos os aspectos. Com ações focadas em ajudar pessoas necessitadas, incentivar a reciclagem e melhorar a ecologia, buscamos transformar nosso planeta em um lugar mais sustentável e solidário. Junte-se a nós nessa missão e faça parte da mudança positiva que queremos ver no mundo.`}
               />
               <p className="text-sm font-medium"></p>
             </CardBody>
@@ -67,9 +70,7 @@ export default function Home() {
               <Tooltip showArrow content="Recompensa">
                 <div className="flex items-center gap-2 rounded-md bg-warning p-1">
                   <CoinsIcon className="text-foreground-50" />
-                  <p className="text-xs font-bold text-foreground-50">
-                    1 Bilhão
-                  </p>
+                  <p className="text-xs font-bold text-foreground-50">1000</p>
                 </div>
               </Tooltip>
             </CardFooter>

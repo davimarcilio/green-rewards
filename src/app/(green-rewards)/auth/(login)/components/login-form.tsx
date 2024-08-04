@@ -7,11 +7,11 @@ import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 const formSchema = z.object({
-  email: z
+  login: z
     .string({
-      required_error: 'Email é obrigatório',
+      required_error: 'Login é obrigatório',
     })
-    .email({ message: 'Email inválido' }),
+    .min(1, 'Login é obrigatório'),
 
   password: z
     .string({ required_error: 'Senha é obrigatória' })
@@ -28,9 +28,9 @@ export function LoginForm() {
     resolver: zodResolver(formSchema),
   })
 
-  function onSubmit({ email, password }: FormData) {}
+  function onSubmit({ login, password }: FormData) {}
 
-  const [showPassword, setShowPassword] = useState(false)
+  const [showPassword, setShowPassword] = useState(true)
 
   function changeShowPassword() {
     setShowPassword((state) => !state)
@@ -42,11 +42,11 @@ export function LoginForm() {
     >
       <Input
         isRequired
-        {...register('email')}
+        {...register('login')}
         size="sm"
         label="Digite seu Email/CPF/CNPJ"
-        errorMessage={errors.email?.message}
-        isInvalid={!!errors.email?.message}
+        errorMessage={errors.login?.message}
+        isInvalid={!!errors.login?.message}
       />
       <Input
         isRequired

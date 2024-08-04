@@ -1,10 +1,10 @@
 'use client'
 
 import { api } from '@/lib/api'
-import { UserAuthResponse } from '@/models/auth'
+import { CorporationAuthResponse, UserAuthResponse } from '@/models/auth'
 import { useAuthStore } from '@/store/auth'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { Button, Input } from '@nextui-org/react'
+import { Button, Input, Link } from '@nextui-org/react'
 import { EyeIcon, EyeOffIcon, LogInIcon } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
@@ -24,7 +24,11 @@ const formSchema = z.object({
 })
 
 type FormData = z.infer<typeof formSchema>
-export function LoginForm() {
+
+interface LoginFormProps {
+  isCorporation: boolean
+}
+export function LoginForm({ isCorporation }: LoginFormProps) {
   const {
     handleSubmit,
     register,
@@ -38,23 +42,38 @@ export function LoginForm() {
 
   async function onSubmit({ login, password }: FormData) {
     try {
-      const { data } = await api.post<UserAuthResponse>('/auth/login', {
-        login,
-        password,
-      })
-
-      setStore({
-        token: data.token,
-        refreshToken: data.refresh,
-        user: data.entity,
-      })
-
-      localStorage.setItem('@green-reward:1.0.0/token', data.token)
-      localStorage.setItem('@green-reward:1.0.0/refreshToken', data.refresh)
+      if (isCorporation) {
+        const { data } = await api.post<CorporationAuthResponse>(
+          `/auth/login/corporation`,
+          {
+            login,
+            password,
+          },
+        )
+        setStore({
+          token: data.token,
+          refreshToken: data.refresh,
+          corporation: data.entity,
+        })
+        localStorage.setItem('@green-reward:1.0.0/token', data.token)
+        localStorage.setItem('@green-reward:1.0.0/refreshToken', data.refresh)
+        router.push('/corporation/missions')
+      } else {
+        const { data } = await api.post<UserAuthResponse>(`/auth/login`, {
+          login,
+          password,
+        })
+        setStore({
+          token: data.token,
+          refreshToken: data.refresh,
+          user: data.entity,
+        })
+        localStorage.setItem('@green-reward:1.0.0/token', data.token)
+        localStorage.setItem('@green-reward:1.0.0/refreshToken', data.refresh)
+        router.push('/missions')
+      }
 
       toast.success('Login realizado com sucesso')
-
-      router.push('/player/missions')
     } catch (error) {
       console.error(error)
 
@@ -108,6 +127,19 @@ export function LoginForm() {
       >
         <LogInIcon /> Acessar plataforma
       </Button>
+      <div className="flex justify-between">
+        <Link size="sm" href="/">
+          Não possui conta?
+        </Link>
+        <Link
+          size="sm"
+          href={isCorporation ? '/auth' : '/auth?corporation=true'}
+        >
+          {isCorporation
+            ? 'Login como player'
+            : 'Login como instituição/patrocinador'}
+        </Link>
+      </div>
     </form>
   )
 }

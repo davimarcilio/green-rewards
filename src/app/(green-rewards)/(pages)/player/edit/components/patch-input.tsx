@@ -26,10 +26,9 @@ export function PatchInput({ patchKey, ...props }: PatchInputProps) {
         return
       }
 
-      const { data } = await api.patch<IUser>(`/user/${user?.id}`, {
+      await api.patch<IUser>(`/user/${user?.id}`, {
         [patchKey]: value,
       })
-
 
       toast.success('Informações salvas com sucesso')
     } catch (error) {

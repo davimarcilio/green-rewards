@@ -19,12 +19,7 @@ const thirdFormSchema = z.object({
     .string({
       required_error: 'Telefone é obrigatório',
     })
-    .min(1, 'Telefone é obrigatório')
-    .refine(
-      (val) =>
-        val.match('^s*(d{2}|d{0})[-. ]?(d{5}|d{4})[-. ]?(d{4})[-. ]?s*$'),
-      { message: 'Telefone inválido' },
-    ),
+    .min(1, 'Telefone é obrigatório'),
 })
 
 type ThirdFormData = z.infer<typeof thirdFormSchema>

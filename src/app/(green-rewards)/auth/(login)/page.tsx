@@ -1,9 +1,19 @@
 import { LoginForm } from './components/login-form'
 
-export default function LoginPage() {
+interface LoginPageProps {
+  searchParams: {
+    corporation?: string
+  }
+}
+
+export default function LoginPage({
+  searchParams: { corporation },
+}: LoginPageProps) {
+  console.log(corporation)
+
   return (
     <div className="flex flex-col gap-5">
-      <LoginForm />
+      <LoginForm isCorporation={corporation ? corporation === 'true' : false} />
     </div>
   )
 }

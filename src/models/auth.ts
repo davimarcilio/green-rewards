@@ -2,6 +2,9 @@ export const userTypes = ['PLAYER', 'ADMIN'] as const
 
 export type IUserType = (typeof userTypes)[number]
 
+export const corporationTypes = ['INSTITUTION', 'SPONSOR'] as const
+export type ICorporationType = (typeof corporationTypes)[number]
+
 export interface IAddress {
   city: string
   complement: string
@@ -35,6 +38,33 @@ export interface IUser {
 
 export interface UserAuthResponse {
   entity: IUser
+  refresh: string
+  token: string
+}
+
+export interface ICorporation {
+  id: number
+  addressId: number
+  logoId: number
+  legalName: string
+  businessName: string
+  responsibleName: string
+  responsibleDocument: string
+  totalPoints: number
+  email: string
+  document: string
+  phone: string
+  alternativePhone: string
+  socialMedia: string
+  type: ICorporationType
+  createdAt: string
+  updatedAt: string
+  deletedAt: string | null
+  address: IAddress
+}
+
+export interface CorporationAuthResponse {
+  entity: ICorporation
   refresh: string
   token: string
 }

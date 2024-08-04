@@ -1,10 +1,10 @@
 import { api } from '@/lib/api'
-import { IUser, UserAuthResponse } from '@/models/auth'
+import { ICorporation, IUser, UserAuthResponse } from '@/models/auth'
 import { create } from 'zustand'
 
 export interface AuthStoreState {
   user: IUser | null
-  corporation: null
+  corporation: ICorporation | null
   token: string | null
   refreshToken: string | null
 }
@@ -19,7 +19,7 @@ export const initialState: AuthStoreState = {
 export interface AuthStoreAction {
   setStore: (props: Partial<AuthStoreState>) => void
   reloadToken: () => Promise<void>
-  logout: ()=>void
+  logout: () => void
 }
 
 export interface AuthStoreProps extends AuthStoreState, AuthStoreAction {}

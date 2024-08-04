@@ -11,6 +11,9 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 import { useLocalStorage } from '@uidotdev/usehooks'
 import { useState } from 'react'
+import toast from 'react-hot-toast'
+import { useRouter } from 'next/navigation'
+import { api } from '@/lib/api'
 const fourthFormSchema = z
   .object({
     businessName: z
@@ -31,12 +34,7 @@ const fourthFormSchema = z
       .string({
         required_error: 'Telefone é obrigatório',
       })
-      .min(1, 'Telefone é obrigatório')
-      .refine(
-        (val) =>
-          val.match('^s*(d{2}|d{0})[-. ]?(d{5}|d{4})[-. ]?(d{4})[-. ]?s*$'),
-        { message: 'Telefone inválido' },
-      ),
+      .min(1, 'Telefone é obrigatório'),
     password: z
       .string({ required_error: 'Senha é obrigatória' })
       .min(8, 'A Senha deve conter no minímo 8 caracteres'),
@@ -60,9 +58,26 @@ interface FourthStepFormProps {
   orgType: string
 }
 export function FourthStepForm({ orgType }: FourthStepFormProps) {
+  const [firstFormData] = useLocalStorage<{
+    username: string
+    email: string
+  } | null>('@green-reward:1.0.0/first-step-form')
+  const [secondFormData] = useLocalStorage<{
+    cep: string
+    state: string
+    city: string
+    neighborhood: string
+    street: string
+    observation: string
+  } | null>('@green-reward:1.0.0/second-step-form')
   const [thirdFormData, setThirdFormData] = useLocalStorage<{
     legalName: string
+
+    document: string
+    phone: string
   } | null>('@green-reward:1.0.0/third-step-form')
+
+  const router = useRouter()
 
   const {
     handleSubmit,
@@ -72,12 +87,61 @@ export function FourthStepForm({ orgType }: FourthStepFormProps) {
     resolver: zodResolver(fourthFormSchema),
   })
 
-  function onSubmit({
+  async function onSubmit({
     businessName,
     responsibleDocument,
     responsibleName,
     responsiblePhone,
-  }: FourthFormData) {}
+    password,
+  }: FourthFormData) {
+    try {
+      if (!!secondFormData && !!firstFormData && !!thirdFormData) {
+        const {
+          cep,
+          city,
+          document,
+          email,
+          legalName,
+          neighborhood,
+          observation,
+          phone,
+          state,
+          street,
+        } = { ...secondFormData, ...firstFormData, ...thirdFormData }
+
+        await api.post('/corporation', {
+          businessName,
+          responsibleDocument,
+          responsibleName,
+          alternativePhone: responsiblePhone,
+          document,
+          email,
+          legalName,
+          phone,
+          password,
+          type: orgType === 'institution' ? 'INSTITUTION' : 'SPONSOR',
+          address: {
+            postcode: cep,
+            state,
+            city,
+            neighborhood,
+            street,
+            complement: observation,
+          },
+        })
+
+        localStorage.removeItem('@green-reward:1.0.0/first-step-form')
+        localStorage.removeItem('@green-reward:1.0.0/second-step-form')
+        localStorage.removeItem('@green-reward:1.0.0/third-step-form')
+
+        toast.success('Organização cadastrada com sucesso')
+        router.push('/auth?corporation=true')
+      }
+    } catch (error) {
+      console.error(error)
+      toast.error('Falha ao cadastrar organização')
+    }
+  }
 
   const [showPassword, setShowPassword] = useState(true)
 

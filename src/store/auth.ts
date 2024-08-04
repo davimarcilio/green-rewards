@@ -19,6 +19,7 @@ export const initialState: AuthStoreState = {
 export interface AuthStoreAction {
   setStore: (props: Partial<AuthStoreState>) => void
   reloadToken: () => Promise<void>
+  logout: ()=>void
 }
 
 export interface AuthStoreProps extends AuthStoreState, AuthStoreAction {}
@@ -34,7 +35,7 @@ export const useAuthStore = create<AuthStoreProps>((set, get) => ({
 
     if (refreshToken) {
       const { data } = await api.post<UserAuthResponse>('/auth/refresh', {
-        refreshToken,
+        token: refreshToken,
       })
       setStore({
         token: data.token,

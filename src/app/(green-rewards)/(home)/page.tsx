@@ -1,5 +1,5 @@
+import { MissionCard } from '@/components/mission-card'
 import { RedirectionForm } from '../components/redirection-form'
-import { MissionCard } from './components/missions-card'
 
 export default function Home() {
   return (
@@ -19,7 +19,14 @@ export default function Home() {
 
           <RedirectionForm />
         </div>
-        <MissionCard />
+        <MissionCard
+          corpName="Green Reward"
+          points={1000}
+          tags={['Ajude']}
+          isAnimated
+          title="Mãos à Obra: Melhore o Mundo, Ajude o Próximo"
+          description={`Nosso objetivo principal é promover um mundo melhor em todos os aspectos. Com ações focadas em ajudar pessoas necessitadas, incentivar a reciclagem e melhorar a ecologia, buscamos transformar nosso planeta em um lugar mais sustentável e solidário. Junte-se a nós nessa missão e faça parte da mudança positiva que queremos ver no mundo.`}
+        />
       </div>
     </main>
   )

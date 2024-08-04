@@ -10,7 +10,7 @@ export default function page() {
           <Wallet className="text-green-400" size={32} />
         </span>
       </header>
-      <article className="grid grid-cols-4 gap-4">
+      <article className="grid grid-cols-4 gap-4 p-2">
         <RescueCard />
         <RescueCard />
         <RescueCard />

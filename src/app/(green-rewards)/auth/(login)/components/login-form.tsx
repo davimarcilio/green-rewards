@@ -1,10 +1,15 @@
 'use client'
 
+import { api } from '@/lib/api'
+import { UserAuthResponse } from '@/models/auth'
+import { useAuthStore } from '@/store/auth'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Button, Input } from '@nextui-org/react'
 import { EyeIcon, EyeOffIcon, LogInIcon } from 'lucide-react'
+import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
+import toast from 'react-hot-toast'
 import { z } from 'zod'
 const formSchema = z.object({
   login: z
@@ -28,7 +33,34 @@ export function LoginForm() {
     resolver: zodResolver(formSchema),
   })
 
-  function onSubmit({ login, password }: FormData) {}
+  const { setStore } = useAuthStore(({ setStore }) => ({ setStore }))
+  const router = useRouter()
+
+  async function onSubmit({ login, password }: FormData) {
+    try {
+      const { data } = await api.post<UserAuthResponse>('/auth/login', {
+        login,
+        password,
+      })
+
+      setStore({
+        token: data.token,
+        refreshToken: data.refresh,
+        user: data.entity,
+      })
+
+      localStorage.setItem('@green-reward:1.0.0/token', data.token)
+      localStorage.setItem('@green-reward:1.0.0/refreshToken', data.refresh)
+
+      toast.success('Login realizado com sucesso')
+
+      router.push('/player/missions')
+    } catch (error) {
+      console.error(error)
+
+      toast.error('Falha ao realizar login')
+    }
+  }
 
   const [showPassword, setShowPassword] = useState(true)
 

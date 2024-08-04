@@ -15,6 +15,8 @@ import toast from 'react-hot-toast'
 import { useQuery } from '@tanstack/react-query'
 import axios from 'axios'
 import { useRouter } from 'next/navigation'
+import { api } from '@/lib/api'
+import dayjs from 'dayjs'
 const secondFormSchema = z
   .object({
     cep: z
@@ -30,6 +32,17 @@ const secondFormSchema = z
         required_error: 'Cidade é obrigatório',
       })
       .min(1, 'Cidade é obrigatório'),
+    birthDate: z
+      .string({
+        required_error: 'Data de nascimento é obrigatório',
+      })
+      .date('Data de nascimento é obrigatório')
+      .transform((val) => dayjs(val).toISOString()),
+    document: z
+      .string({
+        required_error: 'CPF é obrigatório',
+      })
+      .min(11, 'Digite um CPF válido'),
     observation: z.string().optional(),
 
     password: z
@@ -86,17 +99,33 @@ export function SecondStepForm() {
     enabled: cep.length >= 8,
   })
 
-  function onSubmit({
+  async function onSubmit({
     cep,
     city,
-    confirmPassword,
     observation,
     password,
     state,
+    birthDate,
+    document,
   }: SecondFormData) {
     try {
+      await api.post('/user', {
+        ...firstFormData,
+        address: {
+          postcode: cep,
+          city,
+          state,
+          complement: observation,
+        },
+        type: 'PLAYER',
+        password,
+        birthDate,
+        document,
+      })
+      localStorage.removeItem('@green-reward:1.0.0/first-step-form')
+      localStorage.removeItem('@green-reward:1.0.0/second-step-form')
       toast.success('Cadastro realizado com sucesso')
-      router.push('/missions')
+      router.push('/auth')
     } catch (error) {
       toast.error('Ocorreu ao realizar cadastro')
     }
@@ -137,6 +166,21 @@ export function SecondStepForm() {
         onSubmit={handleSubmit(onSubmit)}
         className="flex flex-col gap-2 rounded-lg bg-content3 p-5"
       >
+        <Input
+          {...register('birthDate')}
+          type="date"
+          errorMessage={errors.birthDate?.message}
+          isInvalid={!!errors.birthDate?.message}
+          size="sm"
+          label="Digite sua data de nascimento"
+        />
+        <Input
+          {...register('document')}
+          errorMessage={errors.document?.message}
+          isInvalid={!!errors.document?.message}
+          size="sm"
+          label="Digite seu CPF"
+        />
         <Controller
           name="cep"
           control={control}
@@ -200,12 +244,13 @@ export function SecondStepForm() {
             )
           }}
         />
+
         <Textarea
           errorMessage={errors.observation?.message}
           isInvalid={!!errors.observation?.message}
           {...register('observation')}
           size="sm"
-          label="Observação"
+          label="Complemento"
         />
         <Input
           isRequired

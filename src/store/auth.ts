@@ -8,15 +8,13 @@ import {
 import { create } from 'zustand'
 
 export interface AuthStoreState {
-  user: IUser | null
-  corporation: ICorporation | null
+  entity: IUser | ICorporation | null
   token: string | null
   refreshToken: string | null
 }
 
 export const initialState: AuthStoreState = {
-  user: null,
-  corporation: null,
+  entity: null,
   token: null,
   refreshToken: null,
 }
@@ -44,23 +42,11 @@ export const useAuthStore = create<AuthStoreProps>((set, get) => ({
       >('/auth/refresh', {
         token: refreshToken,
       })
-      if (data.entity.type === 'PLAYER' || data.entity.type === 'ADMIN') {
-        setStore({
-          token: data.token,
-          refreshToken: data.refresh,
-          user: data.entity,
-        })
-      }
-      if (
-        data.entity.type === 'INSTITUTION' ||
-        data.entity.type === 'SPONSOR'
-      ) {
-        setStore({
-          token: data.token,
-          refreshToken: data.refresh,
-          corporation: data.entity,
-        })
-      }
+      setStore({
+        token: data.token,
+        refreshToken: data.refresh,
+        entity: data.entity,
+      })
     }
   },
   logout: () => {

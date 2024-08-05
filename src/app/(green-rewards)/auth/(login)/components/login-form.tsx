@@ -1,7 +1,7 @@
 'use client'
 
 import { api } from '@/lib/api'
-import { CorporationAuthResponse, UserAuthResponse } from '@/models/auth'
+import { CorporationAuthResponse } from '@/models/auth'
 import { useAuthStore } from '@/store/auth'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Button, Input, Link } from '@nextui-org/react'
@@ -42,37 +42,22 @@ export function LoginForm({ isCorporation }: LoginFormProps) {
 
   async function onSubmit({ login, password }: FormData) {
     try {
-      if (isCorporation) {
-        const { data } = await api.post<CorporationAuthResponse>(
-          `/auth/login/corporation`,
-          {
-            login,
-            password,
-          },
-        )
-
-        setStore({
-          token: data.token,
-          refreshToken: data.refresh,
-          corporation: data.entity,
-        })
-        localStorage.setItem('@green-reward:1.0.0/token', data.token)
-        localStorage.setItem('@green-reward:1.0.0/refreshToken', data.refresh)
-        router.push('/missions')
-      } else {
-        const { data } = await api.post<UserAuthResponse>(`/auth/login`, {
+      const { data } = await api.post<CorporationAuthResponse>(
+        `/auth/login${isCorporation ? '/corporation' : ''}`,
+        {
           login,
           password,
-        })
-        setStore({
-          token: data.token,
-          refreshToken: data.refresh,
-          user: data.entity,
-        })
-        localStorage.setItem('@green-reward:1.0.0/token', data.token)
-        localStorage.setItem('@green-reward:1.0.0/refreshToken', data.refresh)
-        router.push('/missions')
-      }
+        },
+      )
+
+      setStore({
+        token: data.token,
+        refreshToken: data.refresh,
+        entity: data.entity,
+      })
+      localStorage.setItem('@green-reward:1.0.0/token', data.token)
+      localStorage.setItem('@green-reward:1.0.0/refreshToken', data.refresh)
+      router.push('/missions')
 
       toast.success('Login realizado com sucesso')
     } catch (error) {

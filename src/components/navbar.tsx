@@ -1,4 +1,5 @@
 'use client'
+import { ICorporation, IUser } from '@/models/auth'
 import { useAuthStore } from '@/store/auth'
 import {
   Navbar,
@@ -23,13 +24,10 @@ type NavLinksProps = { label: string; href: string }
 export function NavbarComponent() {
   const pathName = usePathname()
 
-  const { corporation, user, logout } = useAuthStore(
-    ({ user, corporation, logout }) => ({
-      user,
-      corporation,
-      logout,
-    }),
-  )
+  const { entity, logout } = useAuthStore(({ logout, entity }) => ({
+    entity,
+    logout,
+  }))
   const router = useRouter()
 
   function handleLogout() {
@@ -50,36 +48,37 @@ export function NavbarComponent() {
   const { theme, setTheme } = useTheme()
 
   useEffect(() => {
-    if (user) {
-      if (user.type === 'PLAYER') {
+    if (entity) {
+      if (entity.type === 'PLAYER') {
         setNavLinks([
           { href: '/missions', label: 'Missões' },
           { href: '/missions/active', label: 'Missões Ativas' },
           { href: '/player/rescue', label: 'Prêmios' },
         ])
-      } else {
+      } else if (entity.type === 'ADMIN') {
         setNavLinks([
           { href: '/missions', label: 'Missões' },
           { href: '/admin', label: 'Aprovar requisições' },
         ])
       }
-    }
 
-    if (corporation) {
-      if (corporation.type === 'SPONSOR') {
+      if (entity.type === 'SPONSOR') {
         setNavLinks([
           { href: '/missions', label: 'Missões' },
           { href: '/sponsor/rascue', label: 'Meus Prêmios' },
           { href: '/sponsor/institution', label: 'Ajudar Instituições' },
         ])
-      } else {
+      } else if (entity.type === 'INSTITUTION') {
         setNavLinks([
           { href: '/missions', label: 'Missões' },
           { href: '/institution/mission', label: 'Minhas missões' },
         ])
       }
     }
-  }, [corporation, user])
+  }, [entity])
+
+  const entityUser = entity as IUser
+  const entityCorporation = entity as ICorporation
 
   return (
     <Navbar maxWidth="2xl">
@@ -134,12 +133,12 @@ export function NavbarComponent() {
           </Dropdown>
         </NavbarItem>
         <NavbarItem className="flex items-center justify-center">
-          <Link href="/player/edit">
+          <Link href="/edit">
             <Avatar
-              name={user?.username}
+              name={entityUser?.username ?? entityCorporation?.businessName}
               isBordered
               size="md"
-              color={hasActiveLink('/player/edit') ? 'success' : 'default'}
+              color={hasActiveLink('/edit') ? 'success' : 'default'}
             />
           </Link>
         </NavbarItem>

@@ -1,0 +1,10 @@
+version: "3"
+
+services:
+  green-rewards:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    image: green-rewards
+    ports:
+      - "3000:3000"

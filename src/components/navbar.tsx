@@ -61,7 +61,7 @@ export function NavbarComponent() {
       if (entity.type === 'SPONSOR') {
         setNavLinks([
           { href: '/missions', label: 'Missões' },
-          { href: '/sponsor/rescue', label: 'Meus Prêmios' },
+          { href: '/sponsor/award', label: 'Meus Prêmios' },
           { href: '/sponsor/institution', label: 'Ajudar Instituições' },
         ])
       } else if (entity.type === 'INSTITUTION') {

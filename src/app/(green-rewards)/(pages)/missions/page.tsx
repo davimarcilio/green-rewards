@@ -29,53 +29,39 @@ export default function MissionsPage() {
     <main className="p-4">
       <article className="grid grid-cols-3 gap-4">
         <MissionCard
-          points={500}
-          tags={['ajude']}
-          title="Nos Ajude"
-          corpName="SOS RS"
-          description="Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ullam corrupti labore debitis voluptatibus non expedita rerum aut deserunt voluptate enim. Praesentium perspiciatis recusandae facilis. Nostrum ea quasi sapiente quidem incidunt."
+          points={100}
+          tags={['Parque', 'Limpeza']}
+          title="Limpeza de Parque Local"
+          corpName="Parques Limpos"
+          description="Participe de uma iniciativa de limpeza em um parque da sua cidade. Recolha lixo, separe recicláveis e ajude a manter o espaço verde e limpo."
         />
         <MissionCard
-          points={500}
-          tags={['ajude']}
-          title="Nos Ajude"
-          corpName="SOS RS"
-          description="Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ullam corrupti labore debitis voluptatibus non expedita rerum aut deserunt voluptate enim. Praesentium perspiciatis recusandae facilis. Nostrum ea quasi sapiente quidem incidunt."
+          points={150}
+          tags={['Árvores']}
+          title="Plantio de Árvores"
+          corpName="Árvores pelo mundo"
+          description="Plante uma árvore em um local apropriado ou participe de um evento de plantio comunitário. Contribua para um ambiente mais saudável e sustentável."
         />
         <MissionCard
-          points={500}
-          tags={['ajude']}
-          title="Nos Ajude"
-          corpName="SOS RS"
-          description="Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ullam corrupti labore debitis voluptatibus non expedita rerum aut deserunt voluptate enim. Praesentium perspiciatis recusandae facilis. Nostrum ea quasi sapiente quidem incidunt."
+          points={120}
+          tags={['Animais']}
+          title="Apoio a Abrigo de Animais"
+          corpName="Abrigo de animais"
+          description="Doe alimentos, brinquedos ou tempo voluntário em um abrigo de animais. Ajude a melhorar a vida dos animais que aguardam por adoção."
         />
         <MissionCard
-          points={500}
-          tags={['ajude']}
-          title="Nos Ajude"
+          points={90}
+          tags={['Energia']}
+          title="Economia de Energia"
           corpName="SOS RS"
-          description="Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ullam corrupti labore debitis voluptatibus non expedita rerum aut deserunt voluptate enim. Praesentium perspiciatis recusandae facilis. Nostrum ea quasi sapiente quidem incidunt."
+          description="Reduza seu consumo de energia durante uma semana. Desligue aparelhos quando não estiverem em uso, use lâmpadas de baixo consumo e aproveite a luz natural."
         />
         <MissionCard
-          points={500}
-          tags={['ajude']}
-          title="Nos Ajude"
-          corpName="SOS RS"
-          description="Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ullam corrupti labore debitis voluptatibus non expedita rerum aut deserunt voluptate enim. Praesentium perspiciatis recusandae facilis. Nostrum ea quasi sapiente quidem incidunt."
-        />
-        <MissionCard
-          points={500}
-          tags={['ajude']}
-          title="Nos Ajude"
-          corpName="SOS RS"
-          description="Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ullam corrupti labore debitis voluptatibus non expedita rerum aut deserunt voluptate enim. Praesentium perspiciatis recusandae facilis. Nostrum ea quasi sapiente quidem incidunt."
-        />
-        <MissionCard
-          points={500}
-          tags={['ajude']}
-          title="Nos Ajude"
-          corpName="SOS RS"
-          description="Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ullam corrupti labore debitis voluptatibus non expedita rerum aut deserunt voluptate enim. Praesentium perspiciatis recusandae facilis. Nostrum ea quasi sapiente quidem incidunt."
+          points={130}
+          tags={['Situação de Rua']}
+          title="Auxílio a Pessoas em Situação de Rua"
+          corpName="Sem Teto"
+          description="Participe de uma campanha de doação de roupas, alimentos ou itens de higiene para pessoas em situação de rua. Faça a diferença na vida de quem mais precisa."
         />
       </article>
     </main>

@@ -1,5 +1,6 @@
 import { PropsWithChildren } from 'react'
 
+export const dynamic = 'force-dynamic'
 export default function AuthLayout({ children }: PropsWithChildren) {
   return (
     <div className="px-10 py-5">

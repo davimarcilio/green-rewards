@@ -56,7 +56,7 @@ export function AwardCard({
         <article className="flex items-center justify-center space-x-2 rounded-md bg-content3 p-2">
           <Trophy className="text-warning" />
           <strong className="text-lg font-bold">
-            {name.length > 15 ? name.substring(0, 15) : name}
+            {name.length > 30 ? name.substring(0, 15) : name}
           </strong>
         </article>
         <span className="flex space-x-1 text-xl text-green-400">

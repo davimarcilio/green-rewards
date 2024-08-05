@@ -64,11 +64,13 @@ export function MissionCard({
         <p className="text-sm font-medium"></p>
       </CardBody>
       <CardFooter className="flex w-full flex-col items-start justify-start gap-1">
-        {tags.map((tag) => (
-          <Chip key={tag} size="sm" color="primary" variant="dot">
-            {tag}
-          </Chip>
-        ))}
+        <div className="flex gap-2">
+          {tags.map((tag) => (
+            <Chip key={tag} size="sm" color="primary" variant="dot">
+              {tag}
+            </Chip>
+          ))}
+        </div>
         <div className="flex w-full justify-between">
           <Button color="success" className="rounded-md font-bold">
             Iniciar missão!

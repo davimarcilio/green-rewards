@@ -18,7 +18,13 @@ export function Providers({ children }: PropsWithChildren) {
     reloadToken()
     const currentPath = pathName.split('/')[1]
     if (!currentPath || currentPath.includes('auth')) {
-      router.push('/missions')
+      if (localStorage.getItem('@green-reward:1.0.0/refreshToken')) {
+        router.push('/missions')
+      }
+    } else {
+      if (!localStorage.getItem('@green-reward:1.0.0/refreshToken')) {
+        router.push('/')
+      }
     }
   }, [])
 

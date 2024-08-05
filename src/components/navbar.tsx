@@ -61,13 +61,13 @@ export function NavbarComponent() {
       if (entity.type === 'SPONSOR') {
         setNavLinks([
           { href: '/missions', label: 'Missões' },
-          { href: '/sponsor/rascue', label: 'Meus Prêmios' },
+          { href: '/sponsor/rescue', label: 'Meus Prêmios' },
           { href: '/sponsor/institution', label: 'Ajudar Instituições' },
         ])
       } else if (entity.type === 'INSTITUTION') {
         setNavLinks([
           { href: '/missions', label: 'Missões' },
-          { href: '/institution/mission', label: 'Minhas missões' },
+          { href: '/institution/missions', label: 'Minhas missões' },
         ])
       }
     }

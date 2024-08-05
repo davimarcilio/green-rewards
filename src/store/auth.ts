@@ -5,6 +5,7 @@ import {
   IUser,
   UserAuthResponse,
 } from '@/models/auth'
+import toast from 'react-hot-toast'
 import { create } from 'zustand'
 
 export interface AuthStoreState {
@@ -31,24 +32,30 @@ export const useAuthStore = create<AuthStoreProps>((set, get) => ({
   ...initialState,
   setStore: (props) => set(props),
   reloadToken: async () => {
-    const { setStore } = get()
-    const refreshToken = localStorage.getItem(
-      '@green-reward:1.0.0/refreshToken',
-    )
+    const { setStore, logout } = get()
+    try {
+      const refreshToken = localStorage.getItem(
+        '@green-reward:1.0.0/refreshToken',
+      )
 
-    if (refreshToken) {
-      const { data } = await api.post<
-        UserAuthResponse | CorporationAuthResponse
-      >('/auth/refresh', {
-        token: refreshToken,
-      })
-      setStore({
-        token: data.token,
-        refreshToken: data.refresh,
-        entity: data.entity,
-      })
-      localStorage.setItem('@green-reward:1.0.0/token', data.token)
-      localStorage.setItem('@green-reward:1.0.0/refreshToken', data.refresh)
+      if (refreshToken) {
+        const { data } = await api.post<
+          UserAuthResponse | CorporationAuthResponse
+        >('/auth/refresh', {
+          token: refreshToken,
+        })
+        setStore({
+          token: data.token,
+          refreshToken: data.refresh,
+          entity: data.entity,
+        })
+        localStorage.setItem('@green-reward:1.0.0/token', data.token)
+        localStorage.setItem('@green-reward:1.0.0/refreshToken', data.refresh)
+      }
+    } catch (error) {
+      console.error(error)
+      logout()
+      toast.error('Sessão expirada')
     }
   },
   logout: () => {

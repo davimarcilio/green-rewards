@@ -4,4 +4,5 @@ export type AwardType = {
   name: string
   description: string
   quantity: number
+  id: number
 }

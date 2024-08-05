@@ -47,6 +47,8 @@ export const useAuthStore = create<AuthStoreProps>((set, get) => ({
         refreshToken: data.refresh,
         entity: data.entity,
       })
+      localStorage.setItem('@green-reward:1.0.0/token', data.token)
+      localStorage.setItem('@green-reward:1.0.0/refreshToken', data.refresh)
     }
   },
   logout: () => {

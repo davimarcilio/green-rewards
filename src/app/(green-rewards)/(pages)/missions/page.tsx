@@ -1,6 +1,30 @@
+'use client'
 import { MissionCard } from '@/components/mission-card'
+import { api } from '@/lib/api'
+import { IMission } from '@/models/mission'
+import { useQuery } from '@tanstack/react-query'
+import Loading from '../../loading'
 
-export default function page() {
+export default function MissionsPage() {
+  const { data, isFetching } = useQuery({
+    queryKey: ['missions'],
+    queryFn: async () => {
+      const { data } = await api.get<IMission[]>('/mission')
+
+      return data
+    },
+  })
+
+  console.log(data)
+
+  if (isFetching) {
+    return (
+      <div>
+        <Loading />
+      </div>
+    )
+  }
+
   return (
     <main className="p-4">
       <article className="grid grid-cols-3 gap-4">

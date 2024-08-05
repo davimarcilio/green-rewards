@@ -12,21 +12,21 @@ interface PatchInputProps extends InputProps {
 
 export function PatchInput({ patchKey, ...props }: PatchInputProps) {
   const [isEditing, setIsEditing] = useState(false)
-  const { user } = useAuthStore(({ user }) => ({ user }))
+  const { entity } = useAuthStore(({ entity }) => ({ entity }))
   const [value, setValue] = useState('')
-
+  const userEntity = entity as IUser | null
   useEffect(() => {
-    if (user) {
-      setValue((user[patchKey] as string) ?? '')
+    if (userEntity) {
+      setValue((userEntity[patchKey] as string) ?? '')
     }
-  }, [user])
+  }, [userEntity])
   async function handlePatchUser() {
     try {
-      if (user?.[patchKey] === value) {
+      if (userEntity?.[patchKey] === value) {
         return
       }
 
-      await api.patch<IUser>(`/user/${user?.id}`, {
+      await api.patch<IUser>(`/user/${userEntity?.id}`, {
         [patchKey]: value,
       })
 

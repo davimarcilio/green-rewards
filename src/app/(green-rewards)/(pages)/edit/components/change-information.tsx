@@ -1,4 +1,4 @@
-import { PatchInput } from "./patch-input";
+import { PatchInput } from './patch-input'
 
 export function ChangeInformation() {
   return (
@@ -8,5 +8,5 @@ export function ChangeInformation() {
       <PatchInput patchKey="email" label="Alterar Email" />
       <PatchInput patchKey="phone" label="Alterar Telefone" />
     </div>
-  );
+  )
 }

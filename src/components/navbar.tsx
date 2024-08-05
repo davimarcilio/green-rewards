@@ -35,10 +35,6 @@ export function NavbarComponent() {
     router.push('/')
   }
 
-  // const currentPath = pathName.split('/')[1] ?? 'player'
-
-  // const navLinks: NavLinksProps = []
-
   const [navLinks, setNavLinks] = useState<NavLinksProps[]>([])
 
   const hasActiveLink = (path: string) => {

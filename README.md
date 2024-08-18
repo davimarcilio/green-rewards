@@ -101,7 +101,7 @@ As Instituições usam os pontos doados para criar novas missões.
 # [Figma](https://www.figma.com/design/7T7AchPSlYal0KM49G644V/Hackathon-2024?node-id=0-1&t=LqqQ7BCJBAxKdXZJ-1)
 
 # [Excalidraw](https://excalidraw.com/#room=07d64c337c9fde46abb9,dUM2Cn-ctT51YrIBQ92RsA)
-![alt text](image-1.png)
+![alt text](./docs/excalidrarw.png)
 
 # Estacionamento de ideias
  - Quando não tiver pontos disponíveis, fazer rankup onde ganha patente por fazer boas ações e sobe de nível

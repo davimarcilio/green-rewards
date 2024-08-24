@@ -131,3 +131,5 @@ docker compose up -d
 ```
 
 Acesse localhost:3000
+
+# Solução vencedora do [hackathon](https://github.com/Fernanda-Kipper/hackathon-2024) 2024!
